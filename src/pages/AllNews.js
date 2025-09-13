@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, SectionList, FlatList } from "react-native";
-import { Filter, Search } from "lucide-react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, SectionList, FlatList, Animated } from "react-native";
+import { ArrowRight, Filter, Search } from "lucide-react-native";
+import { format } from "date-fns";
+import { Header } from "../components/header";
 
 const Posts = [
     {
@@ -60,6 +62,21 @@ export function EmployeeNewsPage() {
     const [filteredPosts, setFilteredPosts] = useState(Posts);
     const [isSearching, setIsSearching] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const translateX = useRef(new Animated.Value(0)).current;
+
+    const handlePressIn = () => {
+        Animated.spring(translateX, {
+            toValue: 8,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const handlePressOut = () => {
+        Animated.spring(translateX, {
+            toValue: 0,
+            useNativeDriver: true,
+        }).start();
+    };
 
     useEffect(() => {
         setFilteredPosts(
@@ -76,7 +93,8 @@ export function EmployeeNewsPage() {
     }, [isSearching]);
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
+            <Header />
             {/* Título + Botão */}
             <View style={styles.header}>
                 <Text style={styles.title}>Comunicados</Text>
@@ -113,36 +131,27 @@ export function EmployeeNewsPage() {
                             <View style={styles.cardHeader}>
                                 <Text style={styles.cardTitle}>{item.title}</Text>
                             </View>
+                            <View style={styles.separator} />
                             <View style={styles.cardContent}>
                                 <Text style={styles.cardInfo}>
-                                    <Text style={styles.highlight}>Autor: </Text>
-                                    {item.author}
+                                    {format(new Date(item.date), "dd/MM/yyyy")}
                                 </Text>
-                                <Text style={styles.cardInfo}>
-                                    <Text style={styles.highlight}>Data: </Text>
-                                    {new Date(item.date).toLocaleDateString()}
-                                </Text>
-                                <Text style={styles.cardInfo}>
-                                    <Text style={styles.highlight}>Horário: </Text>
-                                    {new Date(item.date).toLocaleTimeString()}
-                                </Text>
-                                <Text style={styles.cardText}>{item.content}</Text>
-
-                                <View style={styles.imagesGrid}>
-                                    {item.image.map((img, index) => (
-                                        <Image
-                                            key={index}
-                                            source={{ uri: img }}
-                                            style={styles.image}
-                                        />
-                                    ))}
-                                </View>
+                                <TouchableOpacity
+                                    style={styles.seeMore}
+                                    onPressIn={handlePressIn}
+                                    onPressOut={handlePressOut}
+                                >
+                                    <Text style={styles.highlight}>Ver mais detalhes</Text>
+                                    <Animated.View style={{ transform: [{ translateX }] }}>
+                                        <ArrowRight color="#FE5F2F" size={18} />
+                                    </Animated.View>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     )}
                 />
             </View>
-        </ScrollView >
+        </View>
     );
 }
 
@@ -150,13 +159,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#0F0F0F",
         flex: 1,
-        padding: 20,
     },
     header: {
-        marginTop: 40,
+        marginTop: 80,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        padding: 20,
     },
     title: {
         color: "white",
@@ -184,6 +193,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: "#FE5F2F",
         marginTop: 20,
+        marginHorizontal: 20,
         paddingBottom: 4,
     },
     input: {
@@ -195,6 +205,8 @@ const styles = StyleSheet.create({
     postsContainer: {
         marginTop: 20,
         gap: 16,
+        padding: 20,
+        paddingTop: 0,
     },
     card: {
         backgroundColor: "#1C1C1C",
@@ -203,6 +215,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#9CA3AF",
         marginBottom: 20,
+    },
+    separator: {
+        height: 1,
+        backgroundColor: "#9CA3AF",
+        marginVertical: 12,
     },
     cardHeader: {
         marginBottom: 10,
@@ -219,24 +236,19 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 14,
     },
+    seeMore: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 4,
+        marginTop: 2,
+    },
     highlight: {
         color: "#FE5F2F",
-        fontWeight: "bold",
     },
     cardText: {
         color: "white",
         fontSize: 14,
         marginTop: 6,
-    },
-    imagesGrid: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: 10,
-        marginTop: 10,
-    },
-    image: {
-        width: "48%",
-        height: 150,
-        borderRadius: 8,
     },
 });
