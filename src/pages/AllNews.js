@@ -3,60 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView,
 import { ArrowRight, Filter, Search } from "lucide-react-native";
 import { format } from "date-fns";
 import { Header } from "../components/header";
-
-const Posts = [
-    {
-        id: 1,
-        title: "Semana de Promoções Começa Segunda-Feira",
-        author: "João Pereira - Gerente",
-        date: "2025-08-05T08:30:00Z",
-        content:
-            "Pessoal, na próxima semana iniciaremos a campanha de promoções de inverno. Todos devem conferir os preços atualizados no sistema e organizar os produtos nas prateleiras até domingo à noite.",
-        image: [
-            "https://wallpapers.com/images/hd/bee-pictures-y0nui2vunuctxbkz.jpg",
-            "https://blog.petdoginbox.com.br/wp-content/uploads/2023/04/1679342782_bf19eb_pequeninos_e_fofinhos_confira_5_curiosidades_sobre_os_adoraveis_hamsters.jpeg",
-        ],
-    },
-    {
-        id: 2,
-        title: "Treinamento de Atendimento ao Cliente",
-        author: "João Pereira - Gerente",
-        date: "2025-07-28T14:00:00Z",
-        content:
-            "Teremos um treinamento obrigatório de atendimento ao cliente nesta sexta-feira, às 18h, na sala de reuniões. Conto com a presença de todos.",
-        image: ["https://i.pinimg.com/236x/a8/a2/bb/a8a2bb179ffb3050db31da7538a49320.jpg"],
-    },
-    {
-        id: 3,
-        title: "Reforço na Limpeza do Estoque",
-        author: "João Pereira - Gerente",
-        date: "2025-07-20T09:15:00Z",
-        content:
-            "Precisamos manter o estoque limpo e organizado. Peço que cada setor separe 30 minutos na quarta-feira para fazer a verificação e limpeza das prateleiras.",
-        image: ["https://i.pinimg.com/474x/49/6d/b3/496db36e4eb675c7b3986878d5e184ac.jpg"],
-    },
-    {
-        id: 4,
-        title: "Novos Procedimentos para o Caixa",
-        author: "João Pereira - Gerente",
-        date: "2025-07-10T11:45:00Z",
-        content:
-            "A partir desta semana, os caixas deverão conferir o troco e assinar o relatório de fechamento antes de entregar ao financeiro. Isso ajudará a evitar divergências.",
-        image: ["https://preview.redd.it/ukr6be5lvmg71.jpg?width=640&crop=smart&auto=webp&s=7dcf409b11d9c71dd7b23a61c5b69a2d6e562dff"],
-    },
-    {
-        id: 5,
-        title: "Parabéns à Equipe pelo Recorde de Vendas!",
-        author: "João Pereira - Gerente",
-        date: "2025-06-30T17:00:00Z",
-        content:
-            "Este mês batemos o recorde de vendas da loja! Obrigado pelo esforço e dedicação de todos. Vamos continuar com esse ritmo!",
-        image: [
-            "https://static.todamateria.com.br/upload/sh/ut/shutterstock1411747946-cke.jpg",
-            "https://marketplace.canva.com/MADAUzWiF5E/1/thumbnail_large-1/canva-kitten-MADAUzWiF5E.jpg",
-        ],
-    },
-];
+import Posts from '../utils/Posts.json';
 
 function NewsCard({ item }) {
     const translateX = useRef(new Animated.Value(0)).current;
