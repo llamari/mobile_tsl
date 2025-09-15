@@ -1,21 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, SectionList, FlatList, Animated, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Animated } from "react-native";
 import { ArrowRight, Filter, Search } from "lucide-react-native";
 import { format } from "date-fns";
 import { Header } from "../components/header";
 import Posts from '../utils/Posts.json';
 
-function NewsCard({ item }) {
+//componente pra CADA comunicado
+function NewsCard({ item }) { //eu podia colocar tudo direto no flatlist mas eu fiz um componente só pra isso pra ficar mais organizado e as animações das setinhas funcionarem
     const translateX = useRef(new Animated.Value(0)).current;
 
-    const handlePressIn = () => {
+    const handlePressIn = () => { //quando clica, a setinha vai 8 pixels pra direita
         Animated.spring(translateX, {
             toValue: 8,
             useNativeDriver: true,
         }).start();
     };
 
-    const handlePressOut = () => {
+    const handlePressOut = () => { //quando solta, a setinha volta pro lugar :))
         Animated.spring(translateX, {
             toValue: 0,
             useNativeDriver: true,
@@ -30,7 +31,7 @@ function NewsCard({ item }) {
             <View style={styles.separator} />
             <View style={styles.cardContent}>
                 <Text style={styles.cardInfo}>
-                    {format(new Date(item.date), "dd/MM/yyyy")}
+                    {format(new Date(item.date), "dd/MM/yyyy")} {/*essa parte usa o date-fns pra formatar a data*/}
                 </Text>
                 <TouchableOpacity
                     style={styles.seeMore}
@@ -58,18 +59,19 @@ export function EmployeeNewsPage() {
                 post.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
-    }, [searchTerm]);
+    }, [searchTerm]); //toda vez q o termo de pesquisa muda, ele refiltra os posts e coloca no FilteredPosts só os q incluem aquela string
 
     useEffect(() => {
         if (!isSearching) {
             setSearchTerm("");
         }
-    }, [isSearching]);
+    }, [isSearching]); //quando abre ou fecha a parte de pesquisa, ele limpa o termo de pesquisa
 
     return (
         <View style={styles.container}>
+            {/*aqui ele chama a header que tá em ../components/header*/}
             <Header />
-            {/* Título + Botão */}
+            {/* título + botão */}
             <View style={styles.header}>
                 <Text style={styles.title}>Comunicados</Text>
                 <TouchableOpacity
@@ -81,7 +83,8 @@ export function EmployeeNewsPage() {
                 </TouchableOpacity>
             </View>
 
-            {/* Barra de busca */}
+            {/* barra de busca */}
+            {/* só aparece se isSearching for verdade */}
             {isSearching && (
                 <View style={styles.searchContainer}>
                     <TextInput
@@ -97,23 +100,18 @@ export function EmployeeNewsPage() {
 
             {/* Posts */}
             <View style={styles.postsContainer}>
+                {/* flatlist pra mapear todos os posts e fazer um card pra cada */}
                 <FlatList
-                    data={filteredPosts}
+                    data={filteredPosts} 
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <NewsCard item={item} />}
-                    ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-                    contentContainerStyle={{ paddingBottom: 32 }}
                 />
-            </View>
-
-            <View style={{ height: 50, backgroundColor: "#0F0F0F", justifyContent: "center", alignItems: "center" }}>
-                <Text> teste</Text>
             </View>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ //estilização
     container: {
         backgroundColor: "#0F0F0F",
         display: "flex",

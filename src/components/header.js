@@ -1,9 +1,23 @@
 import { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Image, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Image, Dimensions, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Menu, CircleUserRound, Settings } from "lucide-react-native";
 
+//pega a altura e largura da tela
 const { height: screenHeight, width: screenWidth } = Dimensions.get("window"); // altura da tela
+
+const routes = [ //todas as rotas, tendo o nome e o "endereço"
+    { label: "Home", route: "Home" },
+    { label: "Comunicados", route: "News" },
+    { label: "Tarefas", route: "Work" },
+    { label: "Pendências", route: "Todo" },
+    { label: "Gestão de Vendas", route: "Sellings" },
+    { label: "Gestão de Estoque", route: "Inventory" },
+    { label: "Gestão de Compras", route: "Purchases" },
+    { label: "Gestão Financeira", route: "Finance" },
+    { label: "Gestão de Usuários", route: "Users" },
+    { label: "Ponto Eletrônico", route: "Attendance" },
+];
 
 export function Header() {
     const [openMenu, setOpenMenu] = useState(false);
@@ -34,38 +48,28 @@ export function Header() {
                     },
                 ]}
             >
-                {[
-                    { label: "Home", route: "Home" },
-                    { label: "Comunicados", route: "News" },
-                    { label: "Tarefas", route: "Work" },
-                    { label: "Pendências", route: "Todo" },
-                    { label: "Gestão de Vendas", route: "Sellings" },
-                    { label: "Gestão de Estoque", route: "Inventory" },
-                    { label: "Gestão de Compras", route: "Purchases" },
-                    { label: "Gestão Financeira", route: "Finance" },
-                    { label: "Gestão de Usuários", route: "Users" },
-                    { label: "Ponto Eletrônico", route: "Attendance" },
-                ].map((item) => (
-                    <TouchableOpacity
-                        key={item.route}
-                        onPress={() => {
-                            navigation.navigate(item.route);
-                            setOpenMenu(false);
-                        }}
-                    >
-                        <Text style={styles.link}>{item.label}</Text>
-                    </TouchableOpacity>
-                ))}
+                {/*essas rotas ainda não existem */}
+                {/* mapeia todas as rotas e renderiza um touchableOpacity pra cada */}
+                <FlatList
+                    data={routes}
+                    keyExtractor={(route) => route.label}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate(item.route);
+                                setOpenMenu(false);
+                            }}
+                        >
+                            <Text style={styles.link}>{item.label}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
             </Animated.View>
 
             {/* Header */}
             <View style={styles.header}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Menu color="white" size={40} onPress={toggleMenu} />
-                    {/* <Image
-            source={require("../../assets/icon.png")}
-            style={styles.logo}
-          /> */}
                 </View>
                 <View style={{ flexDirection: "row" }}>
                     <CircleUserRound color="white" size={40} style={{ marginRight: 16 }} />
@@ -76,7 +80,7 @@ export function Header() {
     );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ //estilização :))
     sidebar: {
         position: "absolute",
         top: 80,
