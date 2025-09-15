@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, SectionList, FlatList, Animated } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, SectionList, FlatList, Animated, Dimensions } from "react-native";
 import { ArrowRight, Filter, Search } from "lucide-react-native";
 import { format } from "date-fns";
 import { Header } from "../components/header";
@@ -58,10 +58,7 @@ const Posts = [
     },
 ];
 
-export function EmployeeNewsPage() {
-    const [filteredPosts, setFilteredPosts] = useState(Posts);
-    const [isSearching, setIsSearching] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
+function NewsCard({ item }) {
     const translateX = useRef(new Animated.Value(0)).current;
 
     const handlePressIn = () => {
@@ -77,6 +74,36 @@ export function EmployeeNewsPage() {
             useNativeDriver: true,
         }).start();
     };
+
+    return (
+        <View style={styles.card}>
+            <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>{item.title}</Text>
+            </View>
+            <View style={styles.separator} />
+            <View style={styles.cardContent}>
+                <Text style={styles.cardInfo}>
+                    {format(new Date(item.date), "dd/MM/yyyy")}
+                </Text>
+                <TouchableOpacity
+                    style={styles.seeMore}
+                    onPressIn={handlePressIn}
+                    onPressOut={handlePressOut}
+                >
+                    <Text style={styles.highlight}>Ver mais detalhes</Text>
+                    <Animated.View style={{ transform: [{ translateX }] }}>
+                        <ArrowRight color="#FE5F2F" size={18} />
+                    </Animated.View>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+export function EmployeeNewsPage() {
+    const [filteredPosts, setFilteredPosts] = useState(Posts);
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         setFilteredPosts(
@@ -126,30 +153,14 @@ export function EmployeeNewsPage() {
                 <FlatList
                     data={filteredPosts}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => (
-                        <View style={styles.card}>
-                            <View style={styles.cardHeader}>
-                                <Text style={styles.cardTitle}>{item.title}</Text>
-                            </View>
-                            <View style={styles.separator} />
-                            <View style={styles.cardContent}>
-                                <Text style={styles.cardInfo}>
-                                    {format(new Date(item.date), "dd/MM/yyyy")}
-                                </Text>
-                                <TouchableOpacity
-                                    style={styles.seeMore}
-                                    onPressIn={handlePressIn}
-                                    onPressOut={handlePressOut}
-                                >
-                                    <Text style={styles.highlight}>Ver mais detalhes</Text>
-                                    <Animated.View style={{ transform: [{ translateX }] }}>
-                                        <ArrowRight color="#FE5F2F" size={18} />
-                                    </Animated.View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )}
+                    renderItem={({ item }) => <NewsCard item={item} />}
+                    ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+                    contentContainerStyle={{ paddingBottom: 32 }}
                 />
+            </View>
+
+            <View style={{ height: 50, backgroundColor: "#0F0F0F", justifyContent: "center", alignItems: "center" }}>
+                <Text> teste</Text>
             </View>
         </View>
     );
@@ -158,10 +169,13 @@ export function EmployeeNewsPage() {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#0F0F0F",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
         flex: 1,
     },
     header: {
-        marginTop: 80,
+        marginTop: 10,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -203,10 +217,9 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     postsContainer: {
-        marginTop: 20,
         gap: 16,
         padding: 20,
-        paddingTop: 0,
+        flex: 1,
     },
     card: {
         backgroundColor: "#1C1C1C",

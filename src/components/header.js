@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated, Image, Dimensions }
 import { useNavigation } from "@react-navigation/native";
 import { Menu, CircleUserRound, Settings } from "lucide-react-native";
 
-const { height: screenHeight } = Dimensions.get("window"); // altura da tela
+const { height: screenHeight, width: screenWidth } = Dimensions.get("window"); // altura da tela
 
 export function Header() {
     const [openMenu, setOpenMenu] = useState(false);
@@ -24,7 +24,7 @@ export function Header() {
     }
 
     return (
-        <View style={{ flex: 1, width: "100vw" }}>
+        <View style={{ width: screenWidth }}>
             {/* Sidebar */}
             <Animated.View
                 style={[
