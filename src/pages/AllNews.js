@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Animated } from "react-native";
-import { ArrowRight, Filter, Search } from "lucide-react-native";
+import { ArrowRight, Filter, Plus, Search } from "lucide-react-native";
 import { format } from "date-fns";
 import { Header } from "../components/header";
-import Posts from '../utils/Posts.json';
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 //componente pra CADA comunicado
 function NewsCard({ item }) { //eu podia colocar tudo direto no flatlist mas eu fiz um componente só pra isso pra ficar mais organizado e as animações das setinhas funcionarem
+    const navigation = useNavigation()
     const translateX = useRef(new Animated.Value(0)).current;
 
     const handlePressIn = () => { //quando clica, a setinha vai 8 pixels pra direita
@@ -21,6 +23,7 @@ function NewsCard({ item }) { //eu podia colocar tudo direto no flatlist mas eu 
             toValue: 0,
             useNativeDriver: true,
         }).start();
+        navigation.navigate("SpecificPostPage", item.id)
     };
 
     return (
@@ -49,9 +52,28 @@ function NewsCard({ item }) { //eu podia colocar tudo direto no flatlist mas eu 
 }
 
 export function EmployeeNewsPage() {
+    const [Posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState(Posts);
     const [isSearching, setIsSearching] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        async function GetNews() {
+            console.log("Puxando")
+            try {
+                const response = await axios.get("http://localhost:3000/news")
+                setPosts(response.data)
+                setFilteredPosts(response.data)
+                console.log("puxou hein")
+                console.log(response.data)
+            } catch (error) {
+                console.log("eitaa")
+                console.log(error)
+            }
+        }
+
+        GetNews()
+    }, [])
 
     useEffect(() => {
         setFilteredPosts(
@@ -81,6 +103,11 @@ export function EmployeeNewsPage() {
                     <Filter color="white" size={20} />
                     <Text style={styles.filterText}> Filtrar</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.addButton}
+                >
+                    <Plus color="white" size={20} />
+                </TouchableOpacity>
             </View>
 
             {/* barra de busca */}
@@ -102,7 +129,7 @@ export function EmployeeNewsPage() {
             <View style={styles.postsContainer}>
                 {/* flatlist pra mapear todos os posts e fazer um card pra cada */}
                 <FlatList
-                    data={filteredPosts} 
+                    data={filteredPosts}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <NewsCard item={item} />}
                 />
@@ -145,6 +172,16 @@ const styles = StyleSheet.create({ //estilização
         color: "white",
         fontWeight: "600",
         marginLeft: 4,
+    },
+    addButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FE5F2F",
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#FE5F2F",
     },
     searchContainer: {
         flexDirection: "row",
