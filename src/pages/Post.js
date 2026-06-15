@@ -4,26 +4,15 @@ import { Header } from "../components/header";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { format } from "date-fns";
-
+import Posts from '../utils/Posts.json'
 
 export function SpecificPostPage(id) {
     const [Post, setPost] = useState();
     const navigation = useNavigation();
 
     useEffect(() => {
-        async function GetPost() {
-            try {
-                console.log(id.route.params)
-                const response = await axios.get(`http://localhost:3000/news/${id.route.params}`)
-                setPost(response.data)
-                console.log(response.data)
-            } catch (error) {
-                console.log(error)
-                navigation.navigate('EmployeeNewsPage')
-            }
-        }
-
-        GetPost()
+        const p = Posts.find((p) => p.id == id)
+        setPost(p)
     }, [id])
 
 
@@ -44,12 +33,12 @@ export function SpecificPostPage(id) {
                         <Text style={styles.cardInfo}>
                             <Text style={styles.cardTopic}>Autor: </Text>{Post?.author}
                         </Text>
-                        <Text style={styles.cardInfo}>
-                            <Text style={styles.cardTopic}>Data: </Text>{format(new Date(Post?.date), "dd/MM/yyyy")} {/*essa parte usa o date-fns pra formatar a data*/}
+                        {/* <Text style={styles.cardInfo}>
+                            <Text style={styles.cardTopic}>Data: </Text>{format(new Date(Post?.date), "dd/MM/yyyy")} 
                         </Text>
                         <Text style={styles.cardInfo}>
                             <Text style={styles.cardTopic}>Horário: </Text>{format(new Date(Post?.date), "HH:mm")}
-                        </Text>
+                        </Text> */}
                     </View>
                     <View style={styles.postContent}>
                         <Text style={styles.cardInfo}>

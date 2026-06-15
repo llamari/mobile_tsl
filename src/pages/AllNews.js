@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { Header } from "../components/header";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Posts from '../utils/Posts.json'
 
 //componente pra CADA comunicado
 function NewsCard({ item }) { //eu podia colocar tudo direto no flatlist mas eu fiz um componente só pra isso pra ficar mais organizado e as animações das setinhas funcionarem
@@ -52,28 +53,9 @@ function NewsCard({ item }) { //eu podia colocar tudo direto no flatlist mas eu 
 }
 
 export function EmployeeNewsPage() {
-    const [Posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState(Posts);
     const [isSearching, setIsSearching] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-
-    useEffect(() => {
-        async function GetNews() {
-            console.log("Puxando")
-            try {
-                const response = await axios.get("http://localhost:3000/news")
-                setPosts(response.data)
-                setFilteredPosts(response.data)
-                console.log("puxou hein")
-                console.log(response.data)
-            } catch (error) {
-                console.log("eitaa")
-                console.log(error)
-            }
-        }
-
-        GetNews()
-    }, [])
 
     useEffect(() => {
         setFilteredPosts(
