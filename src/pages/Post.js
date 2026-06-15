@@ -11,7 +11,7 @@ export function SpecificPostPage(id) {
     const navigation = useNavigation();
 
     useEffect(() => {
-        const p = Posts.find((p) => p.id == id)
+        const p = Posts.filter((p) => p.id == id)
         setPost(p)
     }, [id])
 

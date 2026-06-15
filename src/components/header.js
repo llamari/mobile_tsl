@@ -8,13 +8,13 @@ const { height: screenHeight, width: screenWidth } = Dimensions.get("window"); /
 
 const routes = [ //todas as rotas, tendo o nome e o "endereço"
     { label: "Home", route: "Home" },
-    { label: "Comunicados", route: "News" },
+    { label: "Comunicados", route: "EmployeeNewsPage" },
     { label: "Tarefas", route: "Work" },
     { label: "Pendências", route: "Todo" },
     { label: "Gestão de Vendas", route: "Sellings" },
     { label: "Gestão de Estoque", route: "Inventory" },
     { label: "Gestão de Compras", route: "Purchases" },
-    { label: "Gestão Financeira", route: "Finance" },
+    { label: "Gestão Financeira", route: "CashFlow" },
     { label: "Gestão de Usuários", route: "Users" },
     { label: "Ponto Eletrônico", route: "Attendance" },
 ];
@@ -89,7 +89,8 @@ const styles = StyleSheet.create({ //estilização :))
         height: screenHeight,
         backgroundColor: "#1C1C1C",
         padding: 20,
-        zIndex: 50,
+        zIndex: 999,
+    elevation: 999,
     },
     link: {
         color: "white",
