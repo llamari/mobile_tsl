@@ -89,8 +89,9 @@ const styles = StyleSheet.create({ //estilização :))
         height: screenHeight,
         backgroundColor: "#1C1C1C",
         padding: 20,
-        zIndex: 999,
-    elevation: 999,
+        
+        zIndex: 9999,
+        elevation: 9999,
     },
     link: {
         color: "white",
@@ -104,6 +105,9 @@ const styles = StyleSheet.create({ //estilização :))
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: 16,
+
+        zIndex: 1000,
+        elevation: 1000,
     },
     logo: {
         width: 48,
