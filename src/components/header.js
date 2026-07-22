@@ -38,7 +38,7 @@ export function Header() {
     }
 
     return (
-        <View style={{ width: screenWidth }}>
+        <View style={styles.wrapper}>
             {/* Sidebar */}
             <Animated.View
                 style={[
@@ -81,6 +81,12 @@ export function Header() {
 }
 
 const styles = StyleSheet.create({ //estilização :))
+    wrapper: {
+        width: screenWidth,
+        position: "relative",
+        zIndex: 10,
+        elevation: 10,
+    },
     sidebar: {
         position: "absolute",
         top: 80,
@@ -89,9 +95,9 @@ const styles = StyleSheet.create({ //estilização :))
         height: screenHeight,
         backgroundColor: "#1C1C1C",
         padding: 20,
-        
         zIndex: 9999,
         elevation: 9999,
+        overflow: "visible",
     },
     link: {
         color: "white",
@@ -105,7 +111,6 @@ const styles = StyleSheet.create({ //estilização :))
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: 16,
-
         zIndex: 1000,
         elevation: 1000,
     },
