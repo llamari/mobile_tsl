@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { Header } from "../components/header";
-import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import { format } from "date-fns";
-
+import { BankingTransactions } from "../components/BankingTransactions";
+import Transactions from "../utils/CashFlow.json";
 
 export function CashFlow() {
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        setTransactions(Transactions);
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -14,9 +17,19 @@ export function CashFlow() {
             <View style={styles.header}>
                 <Text style={styles.title}>Fluxo Caixa</Text>
             </View>
-
+            <View style={styles.subheader}>
+                <Text style={styles.subtitle}>
+                    Confira todas as suas transações, tudo que foi comprado, quanto foi gasto,
+                    suas vendas e quanto foi ganho.
+                </Text>
+            </View>
             <View style={styles.cardContainer}>
-
+                <FlatList
+                    data={transactions}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => <BankingTransactions item={item} />}
+                    contentContainerStyle={styles.listContent}
+                />
             </View>
         </View>
     );
@@ -36,17 +49,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: 20
+        padding: 30
     },
     title: {
         color: "white",
         fontSize: 28,
         fontWeight: "600",
     },
+    subheader: {
+        paddingLeft: 30,
+        paddingTop: 5,
+    },
+    subtitle: {
+        color: "white",
+        fontSize: 15,
+    },
     cardContainer: {
+        flex: 1,
         width: "100%",
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: 'center'
+    },
+    listContent: {
+        paddingBottom: 24,
     },
 })
