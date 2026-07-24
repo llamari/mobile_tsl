@@ -13,16 +13,18 @@ export function BankingTransactions({ item }) {
 
     return (
         <View style={styles.cardsContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{item?.title}</Text>
-            </View>
-            <View style={styles.valueContainer}>
-                {item?.type === "sale" ? (
-                    <BanknoteArrowUp color="#22c55e" size={20} />
-                ) : (
-                    <BanknoteArrowDown color="#ef4444" size={20} />
-                )}
-                <Text style={styles.value}>{priceFormatted}</Text>
+            <View style={styles.alignElements}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>{item?.title}</Text>
+                </View>
+                <View style={styles.valueContainer}>
+                    {item?.type === "sale" ? (
+                        <BanknoteArrowUp color="#234F1E" size={20} />
+                    ) : (
+                        <BanknoteArrowDown color="#A20202" size={20} />
+                    )}
+                    <Text style={styles.value}>{priceFormatted}</Text>
+                </View>
             </View>
             <View style={styles.dateContainer}>
                 <Text style={styles.date}>{dateFormatted} - {timeFormatted}</Text>
@@ -34,12 +36,16 @@ export function BankingTransactions({ item }) {
 const styles = StyleSheet.create({
     cardsContainer: {
         backgroundColor: "#1C1C1C",
-        padding: 16,
+        padding: 20,
         borderRadius: 12,
         marginHorizontal: 20,
-        marginBottom: 16,
-        borderWidth: 1,
-        borderColor: "#9CA3AF",
+        marginBottom: 20,
+    },
+    alignElements: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
     },
     titleContainer: {
         marginBottom: 12,
@@ -60,6 +66,7 @@ const styles = StyleSheet.create({
         color: "white",
     },
     dateContainer: {
+        marginTop: 8,
         marginBottom: 8,
     },
     date: {

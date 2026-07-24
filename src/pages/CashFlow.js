@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { Header } from "../components/header";
-import { BankingTransactions } from "../components/BankingTransactions";
+import { BankingTransactions } from "../components/bankingTransactions";
 import Transactions from "../utils/CashFlow.json";
 
 export function CashFlow() {
@@ -24,12 +24,14 @@ export function CashFlow() {
                 </Text>
             </View>
             <View style={styles.cardContainer}>
-                <FlatList
-                    data={transactions}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <BankingTransactions item={item} />}
-                    contentContainerStyle={styles.listContent}
-                />
+                <View style={styles.lineContainer}>
+                    <FlatList
+                        data={transactions}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => <BankingTransactions item={item} />}
+                        contentContainerStyle={styles.listContent}
+                    />
+                </View>
             </View>
         </View>
     );
@@ -58,7 +60,9 @@ const styles = StyleSheet.create({
     },
     subheader: {
         paddingLeft: 30,
+        paddingRight: 30,
         paddingTop: 5,
+        marginBottom: 35,
     },
     subtitle: {
         color: "white",
@@ -67,6 +71,12 @@ const styles = StyleSheet.create({
     cardContainer: {
         flex: 1,
         width: "100%",
+    },
+    lineContainer: {
+        borderLeftWidth: 2,
+        borderLeftColor: '#fe5f2f',
+        paddingLeft: 20,
+        marginLeft: 30,
     },
     listContent: {
         paddingBottom: 24,

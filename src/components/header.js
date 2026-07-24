@@ -82,7 +82,7 @@ export function Header() {
 
 const styles = StyleSheet.create({ //estilização :))
     wrapper: {
-        width: screenWidth,
+        width: '100%',
         position: "relative",
         zIndex: 10,
         elevation: 10,
