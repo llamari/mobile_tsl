@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ann-1",
+    "title": "Semana de Promoções Começa Segunda-Feira",
+    "author": "João Pereira - Gerente",
+    "date": "2025-08-05T08:30:00Z",
+    "content": "Pessoal, na próxima semana iniciaremos a campanha de promoções de inverno. Todos devem conferir os preços atualizados no sistema e organizar os produtos nas prateleiras até domingo à noite.",
+    "images": [
+      { "id": "img-1a", "url": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200" },
+      { "id": "img-1b", "url": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=1200" }
+    ],
+    "attachments": []
+  },
+  {
+    "id": "ann-2",
+    "title": "Treinamento de Atendimento ao Cliente",
+    "author": "João Pereira - Gerente",
+    "date": "2025-07-28T14:00:00Z",
+    "content": "Teremos um treinamento obrigatório de atendimento ao cliente nesta sexta-feira, às 18h, na sala de reuniões. Conto com a presença de todos.",
+    "images": [
+      { "id": "img-2a", "url": "https://images.unsplash.com/photo-1552581234-26160f608093?w=1200" }
+    ],
+    "attachments": []
+  },
+  {
+    "id": "ann-3",
+    "title": "Reforço na Limpeza do Estoque",
+    "author": "João Pereira - Gerente",
+    "date": "2025-07-20T09:15:00Z",
+    "content": "Precisamos manter o estoque limpo e organizado. Peço que cada setor separe 30 minutos na quarta-feira para fazer a verificação e limpeza das prateleiras.",
+    "images": [],
+    "attachments": []
+  },
+  {
+    "id": "ann-4",
+    "title": "Novos Procedimentos para o Caixa",
+    "author": "João Pereira - Gerente",
+    "date": "2025-07-10T11:45:00Z",
+    "content": "A partir desta semana, os caixas deverão conferir o troco e assinar o relatório de fechamento antes de entregar ao financeiro. Isso ajudará a evitar divergências.",
+    "images": [],
+    "attachments": []
+  },
+  {
+    "id": "ann-5",
+    "title": "Parabéns à Equipe pelo Recorde de Vendas!",
+    "author": "João Pereira - Gerente",
+    "date": "2025-06-30T17:00:00Z",
+    "content": "Este mês batemos o recorde de vendas da loja! Obrigado pelo esforço e dedicação de todos. Vamos continuar com esse ritmo!",
+    "images": [
+      { "id": "img-5a", "url": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1200" }
+    ],
+    "attachments": []
+  }
+]

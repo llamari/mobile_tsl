@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "tsl_mobile",
+    "slug": "tsl_mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "O TSL usa a câmera para você fotografar comunicados e registros da loja.",
+        "NSPhotoLibraryUsageDescription": "O TSL acessa suas fotos para anexar imagens aos comunicados.",
+        "NSLocationWhenInUseUsageDescription": "O TSL usa sua localização para mostrar fornecedores próximos e traçar rotas de entrega.",
+        "NSContactsUsageDescription": "O TSL acessa seus contatos para importar e salvar dados de fornecedores."
+      },
+      "bundleIdentifier": "com.anonymous.tsl-mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": ".env.ANDROID_MAPS_API_KEY"
+        }
+      },
+      "package": "com.anonymous.tslmobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O TSL acessa suas fotos para anexar imagens aos comunicados.",
+          "cameraPermission": "O TSL usa a câmera para você fotografar comunicados e registros da loja."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O TSL usa sua localização para mostrar fornecedores próximos e traçar rotas de entrega."
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "O TSL acessa seus contatos para importar e salvar dados de fornecedores."
+        }
+      ],
+      "expo-document-picker",
+      "expo-web-browser",
+      "expo-sharing",
+      "expo-status-bar"
+    ]
+  }
+}
